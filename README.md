@@ -2,7 +2,7 @@
 
 <p align="center">
   <img
-    src="Images/AI Glaucoma Detection System.png"
+    src="Images/AI- Based Glaucoma Detection System.png"
     alt="AI-Based Glaucoma Detection System project cover"
     width="100%"
   />
@@ -150,15 +150,15 @@ The notebook evaluates test predictions using:
 
 **Current evaluation limitation:** ROC-AUC, sensitivity, specificity, calibration, and ROC curves are identified as future improvements in this project documentation. Do not interpret a model prediction as a clinical diagnosis.
 
-## 🖼️ Project Images
+## 🖼️ Workflow overview
 
-### Project cover
-
-![AI-Based Glaucoma Detection System project cover](Images/AI Glaucoma Detection System.png)
-
-### Workflow overview
-
-![AI-Based Glaucoma Detection System workflow](Images/AI-Based Glaucoma Detection System Workflow.png)
+<p align="center">
+  <img
+    src="Images/AI-Based Glaucoma Detection System Workflow.png"
+    alt="AI-Based Glaucoma Detection System project cover"
+    width="100%"
+  />
+</p>
 
 > These images illustrate the project and its workflow; they are not a substitute for actual evaluation outputs.
 
