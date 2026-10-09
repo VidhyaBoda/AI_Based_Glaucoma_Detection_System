@@ -1,1059 +1,246 @@
 # 👁️ AI-Based Glaucoma Detection System
 
-### Deep Learning & Transfer Learning for Automated Glaucoma Detection from Retinal Fundus Images
+<p align="center">
+  <img
+    src="Images/AI Glaucoma Detection System.png"
+    alt="AI-Based Glaucoma Detection System project cover"
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <strong>Deep Learning • Computer Vision • Transfer Learning</strong><br/>
+  Retinal fundus image classification using EfficientNetB0
+</p>
+
+<p align="center">
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white" alt="Python"/></a>
+  <a href="https://www.tensorflow.org/"><img src="https://img.shields.io/badge/TensorFlow%2FKeras-Deep%20Learning-FF6F00?logo=tensorflow&logoColor=white" alt="TensorFlow/Keras"/></a>
+  <img src="https://img.shields.io/badge/Model-EfficientNetB0-0F766E" alt="EfficientNetB0"/>
+  <img src="https://img.shields.io/badge/Task-Binary%20Classification-2563EB" alt="Binary classification"/>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
+</p>
+
+> **Research/educational prototype only. This repository is not a clinically validated diagnostic system and must not be used to make medical decisions.**
 
 ---
 
 ## 📌 Project Overview
 
-The **AI-Based Glaucoma Detection System** is a deep learning-based medical image classification project designed to automatically classify retinal fundus images into two categories:
+This project explores binary classification of retinal fundus images into **Glaucoma** and **Normal** classes using deep learning. It uses **EfficientNetB0** with ImageNet-pretrained weights, a custom classification head, transfer learning, and partial fine-tuning.
 
-* **Glaucoma**
-* **Normal**
+The notebook documents a research workflow from dataset preparation and image preprocessing through model training, evaluation, model saving, and single-image prediction.
 
-The project uses **EfficientNetB0**, a convolutional neural network pretrained on ImageNet, together with transfer learning and partial fine-tuning to learn visual patterns from retinal fundus images.
+## 🎯 Objectives
 
-The complete workflow covers dataset preparation, train-validation-test splitting, image preprocessing, data augmentation, transfer learning, model training, evaluation, model saving, and individual image prediction.
+- Organize retinal fundus images into two classes: Glaucoma and Normal.
+- Prepare reproducible training, validation, and test splits.
+- Apply image resizing and training-time augmentation.
+- Train an EfficientNetB0-based binary classifier.
+- Review predictions with a confusion matrix and classification report.
 
-The objective is to demonstrate how deep learning and computer vision can be applied to assist in the automated analysis of retinal fundus images for glaucoma detection.
+## ✨ Key Features
 
-> ⚠️ This project is intended for educational and research purposes. It is not a medical diagnostic system and should not be used as a substitute for professional clinical diagnosis.
+- Retinal fundus image preparation and preprocessing
+- Binary classification: Glaucoma vs Normal
+- Approximate 70% / 15% / 15% train-validation-test split
+- Image augmentation for training
+- EfficientNetB0 transfer learning and partial fine-tuning
+- Custom classification head
+- Confusion matrix and scikit-learn classification report
+- Saved model and single-image prediction workflow
 
----
-
-# 🎯 Key Features
-
-* 👁️ Automated Glaucoma vs Normal Classification
-* 🖼️ Retinal Fundus Image Processing
-* 📊 Train / Validation / Test Dataset Split
-* 🔄 Data Augmentation
-* 🧠 EfficientNetB0 Transfer Learning
-* 🔧 Partial Fine-Tuning
-* 🏗️ Custom Deep Learning Classification Head
-* 📈 Model Training and Validation
-* 📊 Confusion Matrix Evaluation
-* 📋 Classification Report
-* 💾 Trained Model Saving
-* 🔮 Single Image Prediction
-* 🐍 Python + TensorFlow/Keras Implementation
-
----
-
-# 🏗️ System Architecture
+## 🧭 Workflow
 
 ```text
-                 Retinal Fundus Images
-                          │
-                          ▼
-                  Kaggle Dataset
-                          │
-                          ▼
-                 Dataset Extraction
-                          │
-                          ▼
-               Dataset Organization
-                          │
-                          ▼
-              Train / Validation / Test
-                    Split (70/15/15)
-                          │
-                          ▼
-              Image Preprocessing
-                  Resize → 224×224
-                          │
-                          ▼
-                Data Augmentation
-           ┌──────────────┼──────────────┐
-           │              │              │
-       Rotation         Zoom       Horizontal Flip
-                          │
-                    Brightness
-                          │
-                          ▼
-                  EfficientNetB0
-                  ImageNet Weights
-                          │
-                          ▼
-              Transfer Learning Model
-                          │
-                          ▼
-             Custom Classification Head
-                          │
-                          ▼
-                 Binary Classification
-                          │
-                    ┌─────┴─────┐
-                    │           │
-                Glaucoma      Normal
-                          │
-                          ▼
-                   Model Evaluation
-                          │
-              ┌───────────┴───────────┐
-              │                       │
-       Confusion Matrix       Classification Report
-                          │
-                          ▼
-                    Model Saving
-                          │
-                          ▼
-                  Single Image
-                    Prediction
+Retinal Fundus Images
+        ↓
+Dataset Download / Organization
+        ↓
+Train / Validation / Test Split
+        ↓
+Image Preprocessing (224 × 224)
+        ↓
+Training Data Augmentation
+        ↓
+EfficientNetB0 (ImageNet Weights)
+        ↓
+Custom Classification Head
+        ↓
+Training and Partial Fine-Tuning
+        ↓
+Test Predictions
+        ↓
+Confusion Matrix + Classification Report
+        ↓
+Saved Model / Single-Image Prediction
 ```
 
----
+## 🧰 Technology Stack
 
-# 🧠 Model Architecture
+| Area | Technology | Use |
+|---|---|---|
+| Programming | Python | Notebook implementation |
+| Deep learning | TensorFlow / Keras | Model construction and training |
+| Backbone | EfficientNetB0 | Image feature learning via transfer learning |
+| Image processing | Pillow | Image loading and resizing |
+| Data processing | NumPy, Pandas | Array and data handling |
+| Evaluation | Scikit-learn | Confusion matrix and classification report |
+| Visualization | Matplotlib, Seaborn | Training/evaluation visualizations |
+| Environment | Jupyter Notebook / Google Colab | Development and experimentation |
+| Version control | Git / GitHub | Source management and documentation |
 
-The project uses:
+## 📂 Dataset
 
-### EfficientNetB0
-
-```text
-EfficientNetB0
-│
-├── ImageNet pretrained weights
-├── include_top=False
-└── Input Shape: 224 × 224 × 3
-```
-
-The pretrained convolutional base is combined with a custom classification head.
-
-### Custom Classification Head
-
-```text
-EfficientNetB0
-      │
-      ▼
-Global Average Pooling
-      │
-      ▼
-Dense(512) + BatchNormalization + Dropout(0.4)
-      │
-      ▼
-Dense(256) + BatchNormalization + Dropout(0.4)
-      │
-      ▼
-Dense(128) + BatchNormalization + Dropout(0.3)
-      │
-      ▼
-Dense(64) + BatchNormalization + Dropout(0.3)
-      │
-      ▼
-Dense(32)
-      │
-      ▼
-Dense(16)
-      │
-      ▼
-Sigmoid Output
-      │
-      ▼
-Glaucoma / Normal
-```
-
----
-
-# 📊 Dataset
-
-## Dataset Used
-
-The project downloads the glaucoma detection dataset through the Kaggle API.
-
-Dataset identifier used in the project:
+The notebook downloads a glaucoma-detection dataset through the Kaggle API using the identifier:
 
 ```text
 dasa7753912/glaucoma-detection
 ```
 
-The notebook uses the following dataset organization:
+The notebook organizes images into two labels:
 
-```text
-Acrima/
-│
-├── Glaucoma/
-│   └── retinal fundus images
-│
-└── Normal/
-    └── retinal fundus images
-```
+- **Glaucoma**
+- **Normal**
 
-The classification task contains two classes:
+The README and notebook should identify the dataset precisely and consistently. Verify that this Kaggle source is the intended ACRIMA dataset before describing it as ACRIMA in a report or resume.
 
-```text
-Glaucoma
-Normal
-```
+### Train / Validation / Test split
 
----
+The notebook describes a two-stage split yielding approximately:
 
-# 📂 Dataset Split
+| Split | Target share |
+|---|---:|
+| Training | 70% |
+| Validation | 15% |
+| Test | 15% |
 
-The dataset is divided into:
+The split uses `random_state = 42` for reproducibility. Actual image counts depend on the dataset files successfully downloaded and included in the split; report the counts from the executed notebook rather than estimating them.
 
-```text
-Dataset
-│
-├── Train
-│   ├── Glaucoma
-│   └── Normal
-│
-├── Validation
-│   ├── Glaucoma
-│   └── Normal
-│
-└── Test
-    ├── Glaucoma
-    └── Normal
-```
+## 🧠 Model Approach
 
-The notebook performs the split in two stages:
+### EfficientNetB0 transfer learning
 
-```text
-70% → Training
-30% → Temporary Set
+- Uses ImageNet-pretrained EfficientNetB0.
+- Removes the original top classification layer with `include_top=False`.
+- Uses an input size of `224 × 224 × 3`.
+- Adds a custom binary-classification head.
+- Freezes earlier backbone layers while fine-tuning the last 30 layers, as configured in the notebook.
 
-Temporary Set
-│
-├── 15% → Validation
-└── 15% → Test
-```
+### Training configuration documented in the notebook
 
-Therefore, the final approximate distribution is:
+| Parameter | Configuration |
+|---|---|
+| Optimizer | Adam |
+| Learning rate | `5e-5` |
+| Loss | Binary cross-entropy |
+| Training epochs | 10 |
+| Batch size | 32 |
+| Image size | 224 × 224 |
+| Decision threshold | 0.5 |
 
-| Dataset    | Percentage |
-| ---------- | ---------: |
-| Training   |        70% |
-| Validation |        15% |
-| Testing    |        15% |
+These are the documented notebook settings. Actual performance should be reported only after running the notebook and reviewing the outputs.
 
-The split uses:
+## 📊 Evaluation
 
-```text
-random_state = 42
-```
+The notebook evaluates test predictions using:
 
-to make the dataset split reproducible.
+- Confusion matrix
+- Classification report, including precision, recall, F1-score, and support
 
----
+**Current evaluation limitation:** ROC-AUC, sensitivity, specificity, calibration, and ROC curves are identified as future improvements in this project documentation. Do not interpret a model prediction as a clinical diagnosis.
 
-# 🔄 Image Preprocessing
+## 🖼️ Project Images
 
-All images are resized to:
+### Project cover
 
-```text
-224 × 224
-```
+![AI-Based Glaucoma Detection System project cover](Images/AI Glaucoma Detection System.png)
 
-The project uses EfficientNet preprocessing:
+### Workflow overview
 
-```python
-preprocess_input
-```
+![AI-Based Glaucoma Detection System workflow](Images/AI-Based Glaucoma Detection System Workflow.png)
 
-The same preprocessing is applied to:
+> These images illustrate the project and its workflow; they are not a substitute for actual evaluation outputs.
 
-* Training images
-* Validation images
-* Test images
-* Individual prediction images
-
----
-
-# 🔄 Data Augmentation
-
-Data augmentation is applied to the training dataset to improve model generalization.
-
-The implemented augmentation techniques include:
-
-```text
-Rotation
-Zoom
-Horizontal Flip
-Brightness Adjustment
-```
-
-Configuration used:
-
-```python
-rotation_range = 15
-zoom_range = 0.2
-horizontal_flip = True
-brightness_range = [0.8, 1.2]
-```
-
-Validation and test datasets use preprocessing without augmentation.
-
----
-
-# 🧠 Transfer Learning
-
-The project uses:
-
-```text
-EfficientNetB0
-```
-
-with pretrained:
-
-```text
-ImageNet weights
-```
-
-The original classification head is removed using:
-
-```python
-include_top=False
-```
-
-Input shape:
-
-```text
-224 × 224 × 3
-```
-
-The EfficientNetB0 base is partially fine-tuned.
-
-The notebook keeps the earlier layers frozen while allowing the final 30 layers to train:
-
-```python
-base_model.trainable = True
-
-for layer in base_model.layers[:-30]:
-    layer.trainable = False
-```
-
-This allows the model to retain general visual representations while adapting deeper layers to retinal fundus image patterns.
-
----
-
-# ⚙️ Model Compilation
-
-The model uses:
-
-### Optimizer
-
-```text
-Adam
-```
-
-### Learning Rate
-
-```text
-5e-5
-```
-
-### Loss Function
-
-```text
-Binary Crossentropy
-```
-
-### Metric
-
-```text
-Accuracy
-```
-
-Configuration:
-
-```python
-model.compile(
-    optimizer=Adam(learning_rate=5e-5),
-    loss="binary_crossentropy",
-    metrics=["accuracy"]
-)
-```
-
----
-
-# 🚀 Model Training
-
-The model is trained using:
-
-```text
-Training Dataset
-       │
-       ▼
-EfficientNetB0
-       │
-       ▼
-Custom Classification Head
-       │
-       ▼
-Binary Crossentropy
-       │
-       ▼
-Validation Dataset
-```
-
-Training configuration currently implemented in the notebook:
-
-```text
-Epochs: 10
-Batch Size: 32
-Image Size: 224 × 224
-```
-
-Training is performed using:
-
-```python
-model.fit(
-    train_data,
-    validation_data=val_data,
-    epochs=10
-)
-```
-
----
-
-# 📊 Model Evaluation
-
-After training, predictions are generated on the test dataset.
-
-The prediction probability is converted into a binary class using a threshold of:
-
-```text
-0.5
-```
-
-The evaluation workflow is:
-
-```text
-Test Images
-     │
-     ▼
-Trained Model
-     │
-     ▼
-Prediction Probability
-     │
-     ▼
-Threshold = 0.5
-     │
-     ▼
-Predicted Class
-     │
-     ▼
-Compare with True Labels
-     │
-     ├── Confusion Matrix
-     │
-     └── Classification Report
-```
-
----
-
-# 📈 Evaluation Metrics
-
-The current implementation generates:
-
-### Confusion Matrix
-
-The confusion matrix is calculated using:
-
-```python
-confusion_matrix(
-    y_true,
-    y_pred
-)
-```
-
-### Classification Report
-
-The project also generates:
-
-```python
-classification_report(
-    y_true,
-    y_pred,
-    target_names=["Glaucoma", "Normal"]
-)
-```
-
-The classification report provides:
-
-* Precision
-* Recall
-* F1-score
-* Support
-
-> Note: ROC-AUC, specificity, sensitivity, and ROC curve are not currently calculated in the uploaded notebook. These can be added as a future improvement for a stronger medical-image evaluation pipeline.
-
----
-
-# 💾 Model Saving
-
-After training, the model is saved as an HDF5 model:
-
-```python
-model.save("gloucoma_detection.h5")
-```
-
-Recommended future filename:
-
-```text
-glaucoma_detection_efficientnetb0.h5
-```
-
-The recommended filename improves clarity and removes the `gloucoma` spelling mistake from the current notebook.
-
----
-
-# 🔮 Single Image Prediction
-
-The project also supports prediction on an individual retinal fundus image.
-
-The image processing pipeline is:
-
-```text
-Input Image
-     │
-     ▼
-Convert to RGB
-     │
-     ▼
-Resize to 224 × 224
-     │
-     ▼
-Convert to NumPy Array
-     │
-     ▼
-EfficientNet Preprocessing
-     │
-     ▼
-Model Prediction
-     │
-     ▼
-Probability
-     │
-     ▼
-Threshold = 0.5
-     │
-     ├── Glaucoma
-     │
-     └── Normal
-```
-
-Example:
-
-```python
-pred = model.predict(img_array, verbose=0)[0][0]
-
-if pred > 0.5:
-    print("Normal")
-else:
-    print("Glaucoma")
-```
-
----
-
-# 🛠️ Technology Stack
-
-| Category                   | Technologies                    |
-| -------------------------- | ------------------------------- |
-| Programming                | Python                          |
-| Deep Learning              | TensorFlow, Keras               |
-| Model                      | EfficientNetB0                  |
-| Transfer Learning          | ImageNet                        |
-| Computer Vision            | TensorFlow / Keras              |
-| Data Processing            | NumPy                           |
-| Data Analysis              | Pandas                          |
-| Visualization              | Matplotlib, Seaborn             |
-| Machine Learning Utilities | Scikit-learn                    |
-| Image Processing           | Pillow                          |
-| Dataset Source             | Kaggle                          |
-| Development Environment    | Jupyter Notebook / Google Colab |
-| Version Control            | Git, GitHub                     |
-
----
-
-# 📂 Project Structure
+## 📁 Repository Structure
 
 ```text
 AI_Based_Glaucoma_Detection_System/
-│
-├── notebooks/
-│   └── AI_Based_Glaucoma_Detection_System.ipynb
-│
-├── models/
-│   └── README.md
-│
-├── results/
-│   ├── confusion_matrix.png
-│   ├── classification_report.txt
-│   └── training_history.png
-│
-├── src/
-│   ├── data_preprocessing.py
-│   ├── data_split.py
-│   ├── train.py
-│   ├── evaluate.py
-│   └── predict.py
-│
+├── Images/
+│   ├── AI Glaucoma Detection System.png
+│   └── AI-Based Glaucoma Detection System Workflow.png
+├── AI_Based_Glaucoma_Detection_System.ipynb
 ├── README.md
-├── requirements.txt
-├── .gitignore
-└── LICENSE
+├── LICENSE
+└── SECURITY.md
 ```
 
-> The current implementation is primarily contained in the Jupyter Notebook. The `src/`, `results/`, and `models/` structure can be introduced as the project is refactored into a production-style ML repository.
+This reflects the current repository layout. The main implementation is in the Jupyter Notebook; `src/`, `models/`, and `results/` folders are not represented as existing files unless they are added later.
 
----
+## 🚀 Getting Started
 
-# 🚀 Installation
-
-## 1️⃣ Clone Repository
+### 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-
+git clone https://github.com/VidhyaBoda/AI_Based_Glaucoma_Detection_System.git
 cd AI_Based_Glaucoma_Detection_System
 ```
 
----
+### 2. Install dependencies
 
-## 2️⃣ Create Virtual Environment
-
-### Using Python
+The current repository is notebook-based. In your Python environment, install the packages used by the notebook:
 
 ```bash
-python -m venv venv
+python -m pip install tensorflow numpy pandas matplotlib seaborn scikit-learn pillow kaggle
 ```
 
-Activate on Windows:
+Package compatibility depends on your Python version and environment. For repeatable setup, add and maintain a tested `requirements.txt` file.
 
-```bash
-venv\Scripts\activate
-```
+### 3. Configure Kaggle access
 
-Activate on Linux / macOS:
+Configure the Kaggle API credentials locally if required by the notebook. **Never commit `kaggle.json`, API keys, passwords, or access tokens to GitHub.**
 
-```bash
-source venv/bin/activate
-```
+### 4. Open and run the notebook
 
----
+Open `AI_Based_Glaucoma_Detection_System.ipynb` in Jupyter Notebook or Google Colab and execute the cells in order. Confirm the dataset is downloaded correctly and review the generated evaluation outputs.
 
-## 3️⃣ Install Dependencies
+## ✅ Implementation Status
 
-```bash
-pip install -r requirements.txt
-```
+The notebook and accompanying documentation describe the following implemented workflow:
 
----
+- Dataset download and organization
+- Train/validation/test splitting
+- Image preprocessing and augmentation
+- EfficientNetB0 transfer learning and partial fine-tuning
+- Model training
+- Confusion matrix and classification report
+- Model saving and single-image prediction
 
-# 📦 Requirements
+The following remain potential future improvements unless separately implemented and verified:
 
-The project uses the following major Python libraries:
+- ROC curve and ROC-AUC
+- Sensitivity and specificity analysis
+- Explainable AI (e.g., Grad-CAM)
+- REST API and web interface
+- Docker and cloud deployment
+- Comparison with alternative model architectures
 
-```text
-tensorflow
-numpy
-pandas
-matplotlib
-seaborn
-scikit-learn
-Pillow
-kaggle
-```
+## 🔬 Future Improvements
 
----
+- Report actual test-set metrics and image counts.
+- Add reproducible output screenshots and error analysis.
+- Examine class balance and potential data leakage.
+- Add ROC-AUC, sensitivity, and specificity when implemented.
+- Explore Grad-CAM or other explainability techniques.
+- Refactor notebook code into reusable modules if the project grows.
 
-# 🔐 Kaggle Dataset Setup
-
-The notebook downloads the dataset using the Kaggle API.
-
-The Kaggle credentials file should **never be committed to GitHub**.
-
-Use:
-
-```text
-kaggle.json
-```
-
-locally and configure the Kaggle API according to your environment.
-
-### ⚠️ Security
-
-Never upload:
-
-```text
-kaggle.json
-```
-
-to GitHub.
-
-Never commit:
-
-```text
-API keys
-Passwords
-Access tokens
-Private credentials
-```
-
----
-
-# ▶️ Running the Project
-
-The current implementation is provided as a Jupyter Notebook.
-
-Open:
-
-```text
-notebooks/
-└── AI_Based_Glaucoma_Detection_System.ipynb
-```
-
-Run the notebook sequentially.
-
-The workflow is:
-
-```text
-1. Configure Kaggle
-2. Download Dataset
-3. Extract Dataset
-4. Split Dataset
-5. Inspect Dataset
-6. Create Image Generators
-7. Apply Data Augmentation
-8. Load EfficientNetB0
-9. Build Classification Head
-10. Compile Model
-11. Train Model
-12. Evaluate Model
-13. Save Model
-14. Perform Single Image Prediction
-```
-
----
-
-# 📊 Project Workflow
-
-```text
-                 ┌─────────────────────┐
-                 │   Kaggle Dataset    │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Dataset Preparation │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-              ┌───────────────────────────┐
-              │ Train / Validation / Test│
-              └─────────────┬─────────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Image Preprocessing│
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Data Augmentation   │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   EfficientNetB0    │
-                 │  ImageNet Weights   │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │ Custom Dense Head   │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │      Training       │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │    Evaluation       │
-                 ├─────────────────────┤
-                 │ Confusion Matrix    │
-                 │ Classification Report│
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   Model Prediction  │
-                 └─────────────────────┘
-```
-
----
-
-# 📌 Current Project Status
-
-| Component                   | Status                |
-| --------------------------- | --------------------- |
-| Dataset Download            | ✅ Implemented         |
-| Dataset Extraction          | ✅ Implemented         |
-| Train/Validation/Test Split | ✅ Implemented         |
-| Image Preprocessing         | ✅ Implemented         |
-| Data Augmentation           | ✅ Implemented         |
-| EfficientNetB0              | ✅ Implemented         |
-| Transfer Learning           | ✅ Implemented         |
-| Partial Fine-Tuning         | ✅ Implemented         |
-| Custom Classification Head  | ✅ Implemented         |
-| Model Training              | ✅ Implemented         |
-| Confusion Matrix            | ✅ Implemented         |
-| Classification Report       | ✅ Implemented         |
-| Model Saving                | ✅ Implemented         |
-| Single Image Prediction     | ✅ Implemented         |
-| ROC Curve                   | 🔄 Future Improvement |
-| ROC-AUC                     | 🔄 Future Improvement |
-| Specificity                 | 🔄 Future Improvement |
-| Sensitivity Analysis        | 🔄 Future Improvement |
-| Explainable AI              | 🔄 Future Improvement |
-| REST API                    | 🔄 Future Improvement |
-| Web Application             | 🔄 Future Improvement |
-| Docker Deployment           | 🔄 Future Improvement |
-| Cloud Deployment            | 🔄 Future Improvement |
-
----
-
-# 🔬 Medical AI Considerations
-
-Glaucoma detection is a medical imaging problem where model evaluation should go beyond simple accuracy.
-
-Future versions of this project should focus on:
-
-```text
-Sensitivity / Recall
-Specificity
-Precision
-F1 Score
-ROC-AUC
-Confusion Matrix
-Calibration
-Explainability
-```
-
-This is especially important because false negatives in glaucoma screening can be clinically significant.
-
----
-
-# 🔮 Future Improvements
-
-## 🧠 Model Improvements
-
-* Compare EfficientNetB0 with EfficientNetB3
-* Compare ResNet architectures
-* Compare DenseNet architectures
-* Hyperparameter tuning
-* Learning-rate scheduling
-* Early stopping
-* Cross-validation
-* Class imbalance handling
-
-## 📊 Evaluation Improvements
-
-* ROC Curve
-* ROC-AUC
-* Sensitivity
-* Specificity
-* Precision-Recall Curve
-* Calibration Curve
-* Error Analysis
-
-## 🔍 Explainable AI
-
-Future versions can include:
-
-* Grad-CAM
-* Saliency Maps
-* Model attention visualization
-* Explainable predictions
-
-This can help visualize which retinal regions influenced the model prediction.
-
-## 🚀 Deployment
-
-Future versions may include:
-
-```text
-TensorFlow Model
-       │
-       ▼
-FastAPI
-       │
-       ▼
-REST API
-       │
-       ▼
-Web Application
-```
-
-Potential deployment technologies:
-
-* FastAPI
-* Streamlit
-* Docker
-* Cloud deployment
-
----
-
-# 🧪 Research & Experimentation
-
-Future experiments can compare:
-
-```text
-                    CNN Models
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
- EfficientNetB0      ResNet         DenseNet
-        │              │              │
-        └──────────────┼──────────────┘
-                       │
-                       ▼
-                Model Comparison
-                       │
-                       ▼
-        Accuracy / Recall / Specificity
-             F1 / ROC-AUC
-```
-
-The goal is to identify a model that provides a better balance between performance, computational efficiency, and generalization.
-
----
-
-# 📷 Project Screenshots
-
-Recommended screenshots for the repository:
-
-## Dataset Structure
-
-*Add dataset organization screenshot here.*
-
----
-
-## Training
-
-*Add training output screenshot here.*
-
----
-
-## Confusion Matrix
-
-*Add confusion matrix screenshot here.*
-
----
-
-## Classification Report
-
-*Add classification report screenshot here.*
-
----
-
-## Sample Prediction
-
-*Add sample glaucoma/normal prediction screenshot here.*
-
----
-
-# 💡 Project Highlights
-
-✅ Deep Learning Based Glaucoma Detection
-
-✅ Retinal Fundus Image Classification
-
-✅ EfficientNetB0 Transfer Learning
-
-✅ ImageNet Pretrained Model
-
-✅ Custom Classification Head
-
-✅ Data Augmentation
-
-✅ Partial Fine-Tuning
-
-✅ Train / Validation / Test Pipeline
-
-✅ Confusion Matrix
-
-✅ Classification Report
-
-✅ Single Image Prediction
-
-✅ Reproducible Dataset Split
-
-✅ TensorFlow / Keras Implementation
-
----
-
-# 🎓 Learning Outcomes
-
-This project demonstrates practical experience with:
-
-* Deep Learning
-* Convolutional Neural Networks
-* Transfer Learning
-* EfficientNet
-* Computer Vision
-* Medical Image Classification
-* TensorFlow
-* Keras
-* Data Augmentation
-* Model Evaluation
-* Binary Classification
-* Git and GitHub Project Organization
-
----
-
-# 👨‍💻 Author
+## 👩‍💻 Author
 
 **Vidhya Boda**
 
-**AI / ML | Data Analytics | Data Engineering**
+- GitHub: [@VidhyaBoda](https://github.com/VidhyaBoda)
+- Project repository: [AI-Based Glaucoma Detection System](https://github.com/VidhyaBoda/AI_Based_Glaucoma_Detection_System)
 
-GitHub:
+## 📄 License
 
-`VidhyaBoda`
-
----
-
-# 🙏 Acknowledgements
-
-This project uses technologies and libraries including:
-
-* TensorFlow
-* Keras
-* EfficientNet
-* Scikit-learn
-* NumPy
-* Pandas
-* Matplotlib
-* Seaborn
-* Pillow
-* Kaggle
-
----
-
-# ⭐ Support
-
-If you found this project useful or interesting, consider giving the repository a ⭐ on GitHub.
-
----
-
-# 📄 License
-
-This project is released under the **MIT License**.
-
----
-
-<div align="center">
-
-### 👁️ AI-Based Glaucoma Detection System
-
-**Deep Learning • Computer Vision • Medical AI • Transfer Learning**
-
-Made with ❤️ using Python & TensorFlow By **VIDHYA BODA**
-
-</div>
+This project is released under the [MIT License](LICENSE).
